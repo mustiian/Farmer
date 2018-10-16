@@ -120,7 +120,8 @@ TResult CFairs::BFSFair( const int& number, const CFarmFair& fair ) const{
                 return result;
             }
         }
-
+        queue.unique();
+        connectionCounter = (int)queue.size();
         distance++;
     }
 
@@ -134,7 +135,6 @@ void CFairs::getMealsFromNeighbors( TResult& result, int& connectionCounter,
         if (closed.find(neighbor) == closed.end()) {
             int neighborMeal = m_Fairs.at(neighbor).getMeal();
             queue.push_back(neighbor);
-            connectionCounter++;
             if (result.m_allMeals.find(neighborMeal) == result.m_allMeals.end()) {
                 result.m_Price += distance;
                 result.m_allMeals.insert(result.m_allMeals.begin(), neighborMeal);
@@ -146,7 +146,6 @@ void CFairs::getMealsFromNeighbors( TResult& result, int& connectionCounter,
     }
     closed.insert(closed.end(), queue.front());
     queue.pop_front();
-    connectionCounter --;
 }
 
 int main(){
